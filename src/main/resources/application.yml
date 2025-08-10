@@ -1,6 +1,16 @@
 server:
   port: 8080
 
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret}      # troque em produção
+    access-exp-seconds: 3600              # 1h
+    refresh-exp-seconds: 2592000
+
+spring doc:
+  api-docs.path: /v3/api-docs
+  swagger-ui.path: /swagger
+
 spring:
   datasource:
     url: jdbc:postgresql://${PG_HOST_PILOT}:${PG_PORT_PILOT}/${PG_DATABASE_PILOT}
