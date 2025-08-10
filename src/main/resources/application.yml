@@ -6,14 +6,23 @@ spring:
     url: jdbc:postgresql://${PG_HOST_PILOT}:${PG_PORT_PILOT}/${PG_DATABASE_PILOT}
     username: ${PG_USER_PILOT}
     password: ${PG_PASSWORD_PILOT}
+    driver-class-name: org.postgresql.Driver   # ajuda o auto-detect
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: none                           # não mexe no schema existente
     properties:
       hibernate:
         format_sql: true
         jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    baseline-on-migrate: true                  # marca o estado atual do DB
+    baseline-version: 1                        # primeira versão “marco”
+    locations: classpath:db/migration          # pasta das futuras migrations
+
 logging:
   level:
     org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace  # mostra parâmetros ? nos logs
+    com.zaxxer.hikari: info
